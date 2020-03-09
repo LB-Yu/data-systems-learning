@@ -11,6 +11,8 @@ import java.nio.ByteBuffer;
 import java.util.List;
 
 /**
+ * This is a custom filter class to present how to use hbase custom filter.
+ *
  * @author Yu Liebing
  */
 public class CustomFilter extends FilterBase {
