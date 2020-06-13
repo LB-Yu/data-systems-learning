@@ -5,7 +5,6 @@ import java.util.Comparator
 
 import org.apache.hadoop.hbase.util.Bytes
 import org.apache.spark.Partitioner
-import org.apache.yetus.audience.InterfaceAudience
 
 /**
  * A Partitioner implementation that will separate records to different
@@ -13,7 +12,6 @@ import org.apache.yetus.audience.InterfaceAudience
  *
  * @param startKeys   The start keys for the given table
  */
-@InterfaceAudience.Public
 class BulkLoadPartitioner(startKeys:Array[Array[Byte]])
   extends Partitioner {
   // when table not exist, startKeys = Byte[0][]
