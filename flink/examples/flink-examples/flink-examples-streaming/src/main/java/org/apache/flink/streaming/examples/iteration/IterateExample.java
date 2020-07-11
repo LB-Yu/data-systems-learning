@@ -65,6 +65,7 @@ public class IterateExample {
 		// continuous flushing of the output buffers (lowest latency)
 		StreamExecutionEnvironment env = StreamExecutionEnvironment.getExecutionEnvironment()
 				.setBufferTimeout(1);
+		env.setParallelism(1);
 
 		// make parameters available in the web interface
 		env.getConfig().setGlobalJobParameters(params);
@@ -81,7 +82,7 @@ public class IterateExample {
 
 		// create an iterative data stream from the input with 5 second timeout
 		IterativeStream<Tuple5<Integer, Integer, Integer, Integer, Integer>> it = inputStream.map(new InputMap())
-				.iterate(5000);
+				.iterate();
 
 		// apply the step function to get the next Fibonacci number
 		// increment the counter and split the output with the output selector
