@@ -1,4 +1,4 @@
-package io.github.lb.kafka.examples;
+package io.github.lb.kafka.examples.simple;
 
 import org.apache.kafka.clients.producer.Callback;
 import org.apache.kafka.clients.producer.KafkaProducer;
@@ -46,7 +46,7 @@ public class Producer extends Thread {
     this.latch = latch;
   }
 
-  KafkaProducer<Integer, String> get() {
+  public KafkaProducer<Integer, String> get() {
     return producer;
   }
 
@@ -55,7 +55,8 @@ public class Producer extends Thread {
     int messageKey = 0;
     int recordsSent = 0;
     while (recordsSent < numRecords) {
-      String messageStr = "Message_" + messageKey;
+//      String messageStr = "Message_" + messageKey;
+      String messageStr = System.currentTimeMillis() + "";
       long startTime = System.currentTimeMillis();
       if (isAsync) { // Send asynchronously
         producer.send(new ProducerRecord<>(topic,

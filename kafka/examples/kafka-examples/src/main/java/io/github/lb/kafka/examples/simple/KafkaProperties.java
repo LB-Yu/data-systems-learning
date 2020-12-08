@@ -1,4 +1,4 @@
-package io.github.lb.kafka.examples;
+package io.github.lb.kafka.examples.simple;
 
 public class KafkaProperties {
   public static final String TOPIC = "topic1";

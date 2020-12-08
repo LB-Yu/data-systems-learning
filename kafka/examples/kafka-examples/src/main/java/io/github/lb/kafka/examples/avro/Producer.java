@@ -1,6 +1,6 @@
 package io.github.lb.kafka.examples.avro;
 
-import io.github.lb.kafka.examples.KafkaProperties;
+import io.github.lb.kafka.examples.simple.KafkaProperties;
 import org.apache.kafka.clients.producer.*;
 import org.apache.kafka.common.serialization.ByteArraySerializer;
 import org.apache.kafka.common.serialization.IntegerSerializer;

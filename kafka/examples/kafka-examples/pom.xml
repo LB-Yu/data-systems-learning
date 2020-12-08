@@ -21,13 +21,6 @@
             <version>${kafka.version}</version>
         </dependency>
 
-        <!-- https://mvnrepository.com/artifact/io.confluent/kafka-avro-serializer -->
-        <dependency>
-            <groupId>io.confluent</groupId>
-            <artifactId>kafka-avro-serializer</artifactId>
-            <version>5.5.1</version>
-        </dependency>
-
         <!-- https://mvnrepository.com/artifact/com.twitter/bijection-core -->
         <dependency>
             <groupId>com.twitter</groupId>
@@ -51,13 +44,6 @@
         </dependency>
 
     </dependencies>
-
-    <repositories>
-        <repository>
-            <id>confluent</id>
-            <url>http://packages.confluent.io/maven/</url>
-        </repository>
-    </repositories>
 
     <build>
         <plugins>
