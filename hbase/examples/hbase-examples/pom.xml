@@ -23,7 +23,7 @@
     <zookeeper.version>3.4.10</zookeeper.version>
     <thrift.version>0.9.3</thrift.version>
     <mockito-all.version>1.10.19</mockito-all.version>
-    <scala.version>2.11.7</scala.version>
+    <scala.version>2.13.1</scala.version>
     <scala.binary.version>2.11</scala.binary.version>
     <spark.version>2.4.5</spark.version>
   </properties>
