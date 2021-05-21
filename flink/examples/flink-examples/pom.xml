@@ -22,7 +22,7 @@ under the License.
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>org.apache.flink</groupId>
-	<version>1.10.0</version>
+	<version>1.10.1</version>
 	<artifactId>flink-examples</artifactId>
 	<name>flink-examples</name>
 	<packaging>pom</packaging>
