@@ -21,11 +21,14 @@ public class ProducerExample {
         producer.initTransactions();
         try {
             producer.beginTransaction();
-            producer.send(new ProducerRecord<>("test", "A", "A-message"));
-            producer.send(new ProducerRecord<>("test", "B", "B-message"));
+            producer.send(new ProducerRecord<>("topic1", "A", "A-message"));
+            producer.send(new ProducerRecord<>("topic1", "B", "B-message"));
+            producer.send(new ProducerRecord<>("topic2", "A", "A-message"));
+            producer.send(new ProducerRecord<>("topic2", "B", "B-message"));
             Thread.sleep(1000);
             double t = 1 / 0;
-            producer.send(new ProducerRecord<>("test", "C", "C-messgae"));
+            producer.send(new ProducerRecord<>("topic1", "C", "C-messgae"));
+            producer.send(new ProducerRecord<>("topic2", "C", "C-messgae"));
             producer.commitTransaction();
         } catch (Exception e) {
             e.printStackTrace();

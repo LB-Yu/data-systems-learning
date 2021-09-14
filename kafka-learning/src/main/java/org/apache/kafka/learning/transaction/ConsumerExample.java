@@ -5,7 +5,6 @@ import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.apache.kafka.clients.consumer.ConsumerRecords;
 import org.apache.kafka.clients.consumer.KafkaConsumer;
 import org.apache.kafka.common.serialization.StringDeserializer;
-import org.apache.kafka.common.utils.Utils;
 
 import java.time.Duration;
 import java.util.Collections;
@@ -23,7 +22,7 @@ public class ConsumerExample {
         props.setProperty(ConsumerConfig.AUTO_OFFSET_RESET_CONFIG, "earliest");
 
         KafkaConsumer<String, String> consumer = new KafkaConsumer<>(props);
-        consumer.subscribe(Collections.singletonList("test"));
+        consumer.subscribe(Collections.singletonList("topic1"));
         ConsumerRecords<String, String> records = consumer.poll(Duration.ofSeconds(1));
         for (ConsumerRecord<String, String> record : records) {
             System.out.println(record);
