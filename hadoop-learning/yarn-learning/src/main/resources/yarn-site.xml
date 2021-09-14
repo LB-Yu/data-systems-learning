@@ -1,0 +1,131 @@
+<?xml version="1.0"?>
+<!--
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License. See accompanying LICENSE file.
+-->
+<configuration>
+
+<!-- Site specific YARN configuration properties -->
+
+    <!-- 指定MR走shuffle -->
+    <property>
+        <name>yarn.nodemanager.aux-services</name>
+        <value>mapreduce_shuffle</value>
+    </property>
+
+    <!-- 指定ResourceManager的地址-->
+    <property>
+        <name>yarn.resourcemanager.hostname</name>
+        <value>node2</value>
+    </property>
+
+    <!-- 环境变量的继承(hadoop 3.x需要) -->
+    <property>
+        <name>yarn.nodemanager.env-whitelist</name>
+        <value>JAVA_HOME,HADOOP_COMMON_HOME,HADOOP_HDFS_HOME,HADOOP_CONF_DIR,CLASSPATH_PREPEND_DISTCACHE,HADOOP_YARN_HOME,HADOOP_MAPRED_HOME</value>
+    </property>
+
+    <!-- 开启日志聚集功能 -->
+	<property>
+		<name>yarn.log-aggregation-enable</name>
+		<value>true</value>
+	</property>
+	<!-- 设置日志聚集服务器地址 -->
+	<property>  
+		<name>yarn.log.server.url</name>  
+		<value>http://node1:19888/jobhistory/logs</value>
+	</property>
+	<!-- 设置日志保留时间为7天 -->
+	<property>
+		<name>yarn.log-aggregation.retain-seconds</name>
+		<value>604800</value>
+	</property>
+    
+    <!-- 选择调度器，默认容量 -->
+	<property>
+		<name>yarn.resourcemanager.scheduler.class</name>
+		<value>org.apache.hadoop.yarn.server.resourcemanager.scheduler.capacity.CapacityScheduler</value>
+	</property>
+
+	<!-- ResourceManager处理调度器请求的线程数量,默认50；如果提交的任务数大于50，可以增加该值，但是不能超过3台 * 4线程 = 12线程（去除其他应用程序实际不能超过8） -->
+	<property>
+		<name>yarn.resourcemanager.scheduler.client.thread-count</name>
+		<value>8</value>
+	</property>
+
+	<!-- 是否让yarn自动检测硬件进行配置，默认是false，如果该节点有很多其他应用程序，建议手动配置。如果该节点没有其他应用程序，可以采用自动 -->
+	<property>
+		<name>yarn.nodemanager.resource.detect-hardware-capabilities</name>
+		<value>false</value>
+	</property>
+
+	<!-- 是否将虚拟核数当作CPU核数，默认是false，采用物理CPU核数 -->
+	<property>
+		<name>yarn.nodemanager.resource.count-logical-processors-as-cores</name>
+		<value>false</value>
+	</property>
+
+	<!-- 虚拟核数和物理核数乘数，默认是1.0 -->
+	<property>
+		<name>yarn.nodemanager.resource.pcores-vcores-multiplier</name>
+		<value>1.0</value>
+	</property>
+
+	<!-- NodeManager使用内存数，默认8G，修改为4G内存 -->
+	<property>
+		<name>yarn.nodemanager.resource.memory-mb</name>
+		<value>4096</value>
+	</property>
+
+	<!-- nodemanager的CPU核数，不按照硬件环境自动设定时默认是8个，修改为4个 -->
+	<property>
+		<name>yarn.nodemanager.resource.cpu-vcores</name>
+		<value>4</value>
+	</property>
+
+	<!-- 容器最小内存，默认1G -->
+	<property>
+		<name>yarn.scheduler.minimum-allocation-mb</name>
+		<value>1024</value>
+	</property>
+
+	<!-- 容器最大内存，默认8G，修改为2G -->
+	<property>
+		<name>yarn.scheduler.maximum-allocation-mb</name>
+		<value>2048</value>
+	</property>
+
+	<!-- 容器最小CPU核数，默认1个 -->
+	<property>
+		<name>yarn.scheduler.minimum-allocation-vcores</name>
+		<value>1</value>
+	</property>
+
+	<!-- 容器最大CPU核数，默认4个，修改为2个 -->
+	<property>
+		<name>yarn.scheduler.maximum-allocation-vcores</name>
+		<value>2</value>
+	</property>
+
+	<!-- 虚拟内存检查，默认打开，修改为关闭 -->
+	<property>
+		<name>yarn.nodemanager.vmem-check-enabled</name>
+		<value>false</value>
+	</property>
+
+	<!-- 虚拟内存和物理内存设置比例,默认2.1 -->
+	<property>
+		<name>yarn.nodemanager.vmem-pmem-ratio</name>
+		<value>2.1</value>
+	</property>
+
+</configuration>
