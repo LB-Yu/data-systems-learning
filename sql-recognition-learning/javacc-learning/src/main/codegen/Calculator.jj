@@ -1,0 +1,99 @@
+PARSER_BEGIN(Calculator)
+package javacc.org.javacc.examples.calculator.calculator;
+
+import java.io.* ;
+
+public class Calculator {
+
+    public Calculator(String expr) {
+        this((Reader)(new StringReader(expr)));
+    }
+
+    public static void main(String[] args) throws Exception  {
+       Calculator calc = new Calculator(args[0]);
+       System.out.println(calc.calc());
+    }
+}}
+}
+
+PARSER_END(Calculator)
+
+
+
+// skip characters
+SKIP:{
+    " "
+    | "\t"
+    | "\n"
+    | "\r"
+    | "\r\n"
+}
+
+
+// keywords
+TOKEN:{
+    <ADD :"+">
+    | <SUB :"-">
+    | <MUL :"*">
+    | <DIV :"/">
+    | <NUMBER :
+            <DIGITS>
+            | <DIGITS> "." <DIGITS>
+            | <DIGITS> "."
+            | "." <DIGITS>
+      >
+    | <#DIGITS : (["0"-"9"])+ >
+}
+
+// calculate
+double calc():
+{
+    Double value ;
+    Double result = 0.0;
+}
+{
+  result = term()
+  // add and sub
+  (
+      <ADD>
+      value = term()
+      {result += value;}
+      |
+      <SUB>
+      value =term()
+      {result -= value;}
+  )*
+  {return result;}
+}
+
+// mul and div
+double term():
+{
+    double value;
+    double result;
+}
+{
+    result = getNumber()
+    (
+       <MUL>
+        value = getNumber()
+        {result *= value;}
+       |
+       <DIV>
+       value = getNumber()
+       {result /= value;}
+    )*
+    {return result;}
+
+}
+
+double getNumber():
+{
+    double number;
+    Token t;
+}
+{
+    t = <NUMBER>
+    {number = Double.parseDouble(t.image);
+    return number;}
+}
