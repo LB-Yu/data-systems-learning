@@ -9,9 +9,14 @@ import org.apache.commons.io.IOUtils;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.PropertyConfigurator;
 
-
+/**
+ * Helper class to over write log4j configuration.
+ * */
 public class Log4jPropertyHelper {
 
+    /**
+     * Over write the targetClass's log4j configuration with custom configuration in log4jPath.
+     * */
     public static void updateLog4jConfiguration(Class<?> targetClass,
                                                 String log4jPath) throws Exception {
         Properties customProperties = new Properties();
@@ -29,7 +34,7 @@ public class Log4jPropertyHelper {
             }
             LogManager.resetConfiguration();
             PropertyConfigurator.configure(originalProperties);
-        }finally {
+        } finally {
             IOUtils.closeQuietly(is);
             IOUtils.closeQuietly(fs);
         }
