@@ -1,0 +1,9 @@
+order stream:
+1,John,Shoes,2021-10-14 16:00:00
+2,Mike,Hat,2021-10-14 16:00:03
+3,Jack,Shoes,2021-10-14 16:00:06
+
+shipment stream
+101,1,ZhongTong,2021-10-14 16:00:01
+102,2,YuanTong,2021-10-14 16:00:04
+103,3,ShunFeng,2021-10-14 16:00:07
