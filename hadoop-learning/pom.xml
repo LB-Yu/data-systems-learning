@@ -17,7 +17,7 @@
 
     <properties>
         <hadoop.version>3.3.2</hadoop.version>
-        <junit.version>4.12</junit.version>
+        <junit.version>4.13.1</junit.version>
         <sl4j.version>1.7.30</sl4j.version>
     </properties>
 
