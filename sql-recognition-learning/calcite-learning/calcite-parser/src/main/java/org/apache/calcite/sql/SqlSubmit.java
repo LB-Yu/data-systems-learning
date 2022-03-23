@@ -6,49 +6,44 @@ import org.apache.calcite.sql.validate.SqlValidator;
 import org.apache.calcite.sql.validate.SqlValidatorScope;
 import org.apache.calcite.util.Litmus;
 
-public class SqlExample extends SqlNode {
-    private String exampleString;
-    private SqlParserPos pos;
+public class SqlSubmit extends SqlNode {
 
-    public SqlExample(SqlParserPos pos, String exampleString) {
+    private final String jobString;
+
+    public SqlSubmit(SqlParserPos pos, String jobString) {
         super(pos);
-        this.pos = pos;
-        this.exampleString = exampleString;
+        this.jobString = jobString;
     }
 
-    public String getExampleString() {
-        System.out.println("getExampleString");
-        return this.exampleString;
+    public String getJobString() {
+        System.out.println("getJobString");
+        return jobString;
     }
 
     @Override
     public SqlNode clone(SqlParserPos sqlParserPos) {
-        System.out.println("clone");
         return null;
     }
 
     @Override
     public void unparse(SqlWriter sqlWriter, int i, int i1) {
-        sqlWriter.keyword("run");
-        sqlWriter.keyword("example");
+        sqlWriter.keyword("submit");
+        sqlWriter.keyword("job");
         sqlWriter.print("\n");
-        sqlWriter.keyword(exampleString);
     }
 
     @Override
     public void validate(SqlValidator sqlValidator, SqlValidatorScope sqlValidatorScope) {
-        System.out.println("validate");
+
     }
 
     @Override
     public <R> R accept(SqlVisitor<R> sqlVisitor) {
-        System.out.println("validate");
         return null;
     }
 
     @Override
     public boolean equalsDeep(SqlNode sqlNode, Litmus litmus) {
-        System.out.println("equalsDeep");
         return false;
     }
 }

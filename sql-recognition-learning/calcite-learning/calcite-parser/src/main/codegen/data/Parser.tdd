@@ -17,13 +17,13 @@
 {
   # Generated parser implementation package and class name.
   package: "org.apache.calcite.sql.parser.impl",
-  class: "ExampleSqlParserImpl",
+  class: "CustomSqlParserImpl",
 
   # List of additional classes and packages to import.
   # Example. "org.apache.calcite.sql.*", "java.util.List".
   # Please keep the import classes in alphabetical order if new class is added.
   imports: [
-    "org.apache.calcite.sql.SqlExample"
+    "org.apache.calcite.sql.SqlSubmit"
   ]
 
   # List of new keywords. Example: "DATABASES", "TABLES". If the keyword is not a reserved
@@ -64,8 +64,8 @@
     "WATERMARK"
     "WATERMARKS"
     "TIMESTAMP_LTZ"
-    "RUN"
-    "EXAMPLE"
+    "SUBMIT"
+    "JOB"
   ]
 
   # List of keywords from "keywords" section that are not reserved.
@@ -387,8 +387,8 @@
     "XML"
     "YEARS"
     "ZONE"
-    "RUN"
-    "EXAMPLE"
+    "SUBMIT"
+    "JOB"
   ]
 
   # List of non-reserved keywords to add;
@@ -418,7 +418,7 @@
   # Return type of method implementation should be 'SqlNode'.
   # Example: SqlShowDatabases(), SqlShowTables().
   statementParserMethods: [
-    "SqlExample()"
+    "SqlSubmit()"
   ]
 
   # List of methods for parsing custom literals.

@@ -17,13 +17,6 @@
 
     <dependencies>
         <dependency>
-            <groupId>org.apache.calcite</groupId>
-            <artifactId>calcite-core</artifactId>
-            <!-- When updating the Calcite version, make sure to update the dependency exclusions -->
-            <version>${calcite.version}</version>
-        </dependency>
-
-        <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-api</artifactId>
             <version>1.7.15</version>

@@ -14,14 +14,14 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 -->
-SqlNode SqlExample() :
+SqlNode SqlSubmit() :
 {
-SqlNode stringNode;
+    SqlNode stringNode;
 }
 {
-    <RUN> <EXAMPLE>
+    <SUBMIT> <JOB> <AS>
     stringNode = StringLiteral()
     {
-        return new SqlExample(getPos(), token.image);
+        return new SqlSubmit(getPos(), token.image);
     }
 }
