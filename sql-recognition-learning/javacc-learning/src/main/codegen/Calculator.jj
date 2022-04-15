@@ -1,99 +1,114 @@
-PARSER_BEGIN(Calculator)
-package javacc.org.javacc.examples.calculator.calculator;
 
-import java.io.* ;
+options {
+    STATIC=false;
+}
+
+PARSER_BEGIN(Calculator)
+package javacc.learning.calculator.parser;
+
+import javacc.learning.calculator.ast.*;
 
 public class Calculator {
 
-    public Calculator(String expr) {
-        this((Reader)(new StringReader(expr)));
+    public Node parse() throws ParseException {
+        return expr();
     }
-
-    public static void main(String[] args) throws Exception  {
-       Calculator calc = new Calculator(args[0]);
-       System.out.println(calc.calc());
-    }
-}}
 }
-
 PARSER_END(Calculator)
 
-
-
-// skip characters
-SKIP:{
+SKIP :
+{
     " "
-    | "\t"
-    | "\n"
-    | "\r"
-    | "\r\n"
+|   "\r"
+|   "\t"
 }
 
-
-// keywords
-TOKEN:{
-    <ADD :"+">
-    | <SUB :"-">
-    | <MUL :"*">
-    | <DIV :"/">
-    | <NUMBER :
-            <DIGITS>
-            | <DIGITS> "." <DIGITS>
-            | <DIGITS> "."
-            | "." <DIGITS>
-      >
-    | <#DIGITS : (["0"-"9"])+ >
+TOKEN:
+{
+    < NUMBER: (<DIGIT>)+ ( "." (<DIGIT>)+ )? >
+|   < DIGIT: ["0"-"9"] >
+|   < EOL: "\n" >
 }
 
-// calculate
-double calc():
+TOKEN:
 {
-    Double value ;
-    Double result = 0.0;
-}
-{
-  result = term()
-  // add and sub
-  (
-      <ADD>
-      value = term()
-      {result += value;}
-      |
-      <SUB>
-      value =term()
-      {result -= value;}
-  )*
-  {return result;}
+    <SIN: "sin">
+|   <COS: "cos">
+|   <TAN: "tan">
 }
 
-// mul and div
-double term():
+Node expr():
 {
-    double value;
-    double result;
+    Node left;
+    Node right;
 }
 {
-    result = getNumber()
+    left=term()
     (
-       <MUL>
-        value = getNumber()
-        {result *= value;}
-       |
-       <DIV>
-       value = getNumber()
-       {result /= value;}
+        "+" right=expr()    { return new ExprNode(left, right, Operator.PLUS); }
+    |   "-" right=expr()    { return new ExprNode(left, right, Operator.MINUS); }
     )*
-    {return result;}
-
+    { return left; }
 }
 
-double getNumber():
+Node term():
 {
-    double number;
+    Node left;
+    Node right;
+}
+{
+    left=primary()
+    (
+        "*" right=term()    { return new TermNode(left, right, Operator.MUL); }
+    |   "/" right=term()    { return new TermNode(left, right, Operator.DIV); }
+    )*
+    { return left; }
+}
+
+Node primary():
+{
     Token t;
+    Token p;
+    Node n;
 }
 {
-    t = <NUMBER>
-    {number = Double.parseDouble(t.image);
-    return number;}
+    t=<NUMBER>
+    {
+        double number = Double.parseDouble(t.image);
+        return new ValueNode(number);
+    }
+|   LOOKAHEAD(<NUMBER> "!")
+    t=<NUMBER> "!"
+    {
+        String value = t.image;
+        double number = Double.parseDouble(value);
+        return new FactorialNode(new ValueNode(number));
+    }
+|   LOOKAHEAD("(" n=expr() ")" "!")
+    "(" n=expr() ")" "!"
+    {
+        return new FactorialNode(n);
+    }
+|   "+" n=primary() { return n; }
+|   "-" n=primary()
+    {
+        n.setSign(-1);
+        return n;
+    }
+|   "(" n=expr() ")"
+    {
+        return n;
+    }
+|   <SIN> "(" n=expr() ")"
+    {
+        return new SinNode(n);
+    }
+|   <COS> "(" n=expr() ")"
+    {
+        return new CosNode(n);
+    }
+|   <TAN> "(" n=expr() ")"
+    {
+        return new TanNode(n);
+    }
 }
