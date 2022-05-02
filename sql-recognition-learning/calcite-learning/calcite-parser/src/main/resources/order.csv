@@ -1,0 +1,6 @@
+id:string,user_id:string,goods:string,price:double
+001,1,Cola,3.5
+002,1,Hat,38.9
+003,2,Shoes,199.9
+004,3,Book,39.9
+005,4,Phone,2499.9
