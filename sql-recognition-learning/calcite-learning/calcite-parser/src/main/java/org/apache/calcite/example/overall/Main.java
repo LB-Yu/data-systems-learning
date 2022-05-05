@@ -18,14 +18,21 @@ import org.apache.calcite.tools.RuleSets;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
+/**
+ * Arguments: <br>
+ * args[0]: csv file path for user.csv <br>
+ * args[1]: csv file path for order.csv <br>
+ * */
 public class Main {
 
   public static void main(String[] args) throws Exception {
+    String userPath = args[0];
+    String orderPath = args[1];
     SimpleTable userTable = SimpleTable.newBuilder("users")
             .addField("id", SqlTypeName.VARCHAR)
             .addField("name", SqlTypeName.VARCHAR)
             .addField("age", SqlTypeName.INTEGER)
-            .withFilePath("/home/liebing/Code/data_systems_learning/sql-recognition-learning/calcite-learning/calcite-parser/src/main/resources/user.csv")
+            .withFilePath(userPath)
             .withRowCount(10)
             .build();
     SimpleTable orderTable = SimpleTable.newBuilder("orders")
@@ -33,7 +40,7 @@ public class Main {
             .addField("user_id", SqlTypeName.VARCHAR)
             .addField("goods", SqlTypeName.VARCHAR)
             .addField("price", SqlTypeName.DECIMAL)
-            .withFilePath("/home/liebing/Code/data_systems_learning/sql-recognition-learning/calcite-learning/calcite-parser/src/main/resources/order.csv")
+            .withFilePath(orderPath)
             .withRowCount(10)
             .build();
     SimpleSchema schema = SimpleSchema.newBuilder("s")
