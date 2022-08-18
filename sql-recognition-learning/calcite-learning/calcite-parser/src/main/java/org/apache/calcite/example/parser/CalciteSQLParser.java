@@ -8,7 +8,7 @@ import org.apache.calcite.sql.parser.impl.CustomSqlParserImpl;
 public class CalciteSQLParser {
 
   public static void main(String[] args) throws SqlParseException {
-    String ddl = "create table aa (p Point) with ('a' = 'b')";
+    String ddl = "CREATE TABLE aa (id INT) WITH ('connector' = 'file')";
     String sql = "select ca, cb, cc from t where cast(ca AS INT) = 10 AND YEAR() > 2000";
 
     SqlParser.Config config = SqlParser.config()

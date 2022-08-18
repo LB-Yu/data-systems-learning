@@ -172,9 +172,6 @@ public class SimpleTable extends AbstractTable implements ScannableTable, Projec
       if (fieldNames.isEmpty()) {
         throw new IllegalStateException("Table must have at least one field");
       }
-      if (rowCount == 0L) {
-        throw new IllegalStateException("Table must have positive row count");
-      }
       return new SimpleTable(
               tableName, filePath, fieldNames, fieldTypes, new SimpleTableStatistic(rowCount));
     }

@@ -4,6 +4,7 @@ import org.apache.calcite.adapter.enumerable.EnumerableConvention;
 import org.apache.calcite.adapter.enumerable.EnumerableInterpretable;
 import org.apache.calcite.adapter.enumerable.EnumerableRel;
 import org.apache.calcite.adapter.enumerable.EnumerableRules;
+import org.apache.calcite.example.CalciteUtil;
 import org.apache.calcite.jdbc.CalciteSchema;
 import org.apache.calcite.linq4j.Enumerable;
 import org.apache.calcite.linq4j.Enumerator;
@@ -55,17 +56,20 @@ public class Main {
             "WHERE age >= 20 AND age <= 30 " +
             "GROUP BY u.id, name, age " +
             "ORDER BY u.id";
+    String sql1 = "SELECT id, age + 1 FROM users";
+    String sql2 = "INSERT INTO users VALUES (1, 'Jark', 21)";
+    String sql3 = "DELETE FROM users WHERE id > 1";
 
     Optimizer optimizer = Optimizer.create(schema);
     // 1. SQL parse: SQL string --> SqlNode
-    SqlNode sqlNode = optimizer.parse(sql);
-    print("Parse result:", sqlNode.toString());
+    SqlNode sqlNode = optimizer.parse(sql1);
+    CalciteUtil.print("Parse result:", sqlNode.toString());
     // 2. SQL validate: SqlNode --> SqlNode
     SqlNode validateSqlNode = optimizer.validate(sqlNode);
-    print("Validate result:", validateSqlNode.toString());
+    CalciteUtil.print("Validate result:", validateSqlNode.toString());
     // 3. SQL convert: SqlNode --> RelNode
     RelNode relNode = optimizer.convert(validateSqlNode);
-    print("Convert result:", relNode.explain());
+    CalciteUtil.print("Convert result:", relNode.explain());
     // 4. SQL Optimize: RelNode --> RelNode
     RuleSet rules = RuleSets.ofList(
             CoreRules.FILTER_TO_CALC,
@@ -84,7 +88,7 @@ public class Main {
             relNode,
             relNode.getTraitSet().plus(EnumerableConvention.INSTANCE),
             rules);
-    print("Optimize result:", optimizerRelTree.explain());
+    CalciteUtil.print("Optimize result:", optimizerRelTree.explain());
     // 5. SQL execute: RelNode --> execute code
     EnumerableRel enumerable = (EnumerableRel) optimizerRelTree;
     Map<String, Object> internalParameters = new LinkedHashMap<>();
@@ -103,12 +107,5 @@ public class Main {
       sb.setLength(sb.length() - 1);
       System.out.println(sb);
     }
-  }
-
-  private static void print(String msg, String content) {
-    System.out.println("========");
-    System.out.println(msg);
-    System.out.println(content);
-    System.out.println("========");
   }
 }
