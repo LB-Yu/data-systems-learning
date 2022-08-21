@@ -9,14 +9,9 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>flink-sql</artifactId>
+    <artifactId>flink-common</artifactId>
 
     <dependencies>
-        <dependency>
-            <groupId>org.apache.flink.learning</groupId>
-            <artifactId>flink-common</artifactId>
-        </dependency>
-
         <!-- Flink dependencies -->
         <dependency>
             <groupId>org.apache.flink</groupId>
@@ -45,32 +40,16 @@
             <artifactId>flink-table-planner_${scala.binary.version}</artifactId>
         </dependency>
 
-        <!-- log system -->
+        <!-- Connectors -->
         <dependency>
-            <groupId>org.slf4j</groupId>
-            <artifactId>slf4j-api</artifactId>
-            <version>${slf4j.version}</version>
+            <groupId>org.apache.flink</groupId>
+            <artifactId>flink-connector-jdbc</artifactId>
         </dependency>
+
         <dependency>
-            <groupId>org.apache.logging.log4j</groupId>
-            <artifactId>log4j-slf4j-impl</artifactId>
-            <version>${log4j.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.apache.logging.log4j</groupId>
-            <artifactId>log4j-api</artifactId>
-            <version>${log4j.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.apache.logging.log4j</groupId>
-            <artifactId>log4j-core</artifactId>
-            <version>${log4j.version}</version>
-        </dependency>
-        <dependency>
-            <!-- API bridge between log4j 1 and 2 -->
-            <groupId>org.apache.logging.log4j</groupId>
-            <artifactId>log4j-1.2-api</artifactId>
-            <version>${log4j.version}</version>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+            <version>8.0.20</version>
         </dependency>
     </dependencies>
 
