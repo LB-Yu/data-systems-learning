@@ -14,7 +14,7 @@
     </modules>
 
     <properties>
-        <calcite.version>1.26.0</calcite.version>
+        <calcite.version>1.32.0</calcite.version>
         <guava.version>29.0-jre</guava.version>
     </properties>
 
