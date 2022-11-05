@@ -16,6 +16,7 @@
     <properties>
         <calcite.version>1.26.0</calcite.version>
         <guava.version>29.0-jre</guava.version>
+        <flink.version>1.15.0</flink.version>
     </properties>
 
     <dependencies>
@@ -39,6 +40,22 @@
             <artifactId>calcite-core</artifactId>
             <version>${calcite.version}</version>
             <type>test-jar</type>
+        </dependency>
+
+        <dependency>
+            <groupId>org.apache.flink</groupId>
+            <artifactId>flink-table-api-java</artifactId>
+            <version>${flink.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.flink</groupId>
+            <artifactId>flink-table-api-java-bridge</artifactId>
+            <version>${flink.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.flink</groupId>
+            <artifactId>flink-table-planner_2.12</artifactId>
+            <version>${flink.version}</version>
         </dependency>
 
         <dependency>
