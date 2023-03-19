@@ -89,14 +89,7 @@ public class BindableMain {
                 rules);
         CalciteUtil.print("Optimize result:", optimizerRelTree.explain());
         // 5. SQL execute: RelNode --> execute code
-//        EnumerableRel enumerable = (EnumerableRel) optimizerRelTree;
         BindableRel bindableRel = (BindableRel) optimizerRelTree;
-
-//        Map<String, Object> internalParameters = new LinkedHashMap<>();
-//        EnumerableRel.Prefer prefer = EnumerableRel.Prefer.ARRAY;
-//        Bindable bindable = EnumerableInterpretable.toBindable(internalParameters,
-//                null, enumerable, prefer);
-//        Enumerable bind = bindable.bind(new SimpleDataContext(rootSchema.plus()));
 
         Enumerable bind = bindableRel.bind(new SimpleDataContext(rootSchema.plus()));
         Enumerator enumerator = bind.enumerator();
