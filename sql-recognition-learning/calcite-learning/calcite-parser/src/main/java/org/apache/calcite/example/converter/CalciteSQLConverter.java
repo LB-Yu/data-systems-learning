@@ -52,11 +52,12 @@ public class CalciteSQLConverter {
     CalciteSchema rootSchema = CalciteSchema.createRootSchema(false, false);
     rootSchema.add(schema.getSchemaName(), schema);
 
-    String sql = "SELECT u.id, name, age, sum(price) " +
-            "FROM users AS u join orders AS o ON u.id = o.user_id " +
-            "WHERE age >= 20 AND age <= 30 " +
-            "GROUP BY u.id, name, age " +
-            "ORDER BY u.id";
+//    String sql = "SELECT u.id, name, age, sum(price) " +
+//            "FROM users AS u join orders AS o ON u.id = o.user_id " +
+//            "WHERE age >= 20 AND age <= 30 " +
+//            "GROUP BY u.id, name, age " +
+//            "ORDER BY u.id";
+    String sql = "SELECT id FROM users where age >= 20";
 
     Properties configProperties = new Properties();
     configProperties.put(CalciteConnectionProperty.CASE_SENSITIVE.camelName(), Boolean.TRUE.toString());

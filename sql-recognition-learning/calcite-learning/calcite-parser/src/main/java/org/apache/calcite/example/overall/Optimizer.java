@@ -40,8 +40,7 @@ public class Optimizer {
           CalciteConnectionConfig config,
           SqlValidator validator,
           SqlToRelConverter converter,
-          VolcanoPlanner planner
-  ) {
+          VolcanoPlanner planner) {
     this.config = config;
     this.validator = validator;
     this.converter = converter;

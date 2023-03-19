@@ -5,6 +5,9 @@ import org.apache.calcite.adapter.enumerable.EnumerableInterpretable;
 import org.apache.calcite.adapter.enumerable.EnumerableRel;
 import org.apache.calcite.adapter.enumerable.EnumerableRules;
 import org.apache.calcite.example.CalciteUtil;
+import org.apache.calcite.interpreter.BindableConvention;
+import org.apache.calcite.interpreter.BindableRel;
+import org.apache.calcite.interpreter.Bindables;
 import org.apache.calcite.jdbc.CalciteSchema;
 import org.apache.calcite.linq4j.Enumerable;
 import org.apache.calcite.linq4j.Enumerator;
@@ -23,42 +26,42 @@ import java.util.Map;
  * Arguments: <br>
  * args[0]: csv file path for user.csv <br>
  * args[1]: csv file path for order.csv <br>
- * */
+ */
 public class Main {
 
-  public static void main(String[] args) throws Exception {
-    String userPath = args[0];
-    String orderPath = args[1];
-    SimpleTable userTable = SimpleTable.newBuilder("users")
-            .addField("id", SqlTypeName.VARCHAR)
-            .addField("name", SqlTypeName.VARCHAR)
-            .addField("age", SqlTypeName.INTEGER)
-            .withFilePath(userPath)
-            .withRowCount(10)
-            .build();
-    SimpleTable orderTable = SimpleTable.newBuilder("orders")
-            .addField("id", SqlTypeName.VARCHAR)
-            .addField("user_id", SqlTypeName.VARCHAR)
-            .addField("goods", SqlTypeName.VARCHAR)
-            .addField("price", SqlTypeName.DECIMAL)
-            .withFilePath(orderPath)
-            .withRowCount(10)
-            .build();
-    SimpleSchema schema = SimpleSchema.newBuilder("s")
-            .addTable(userTable)
-            .addTable(orderTable)
-            .build();
-    CalciteSchema rootSchema = CalciteSchema.createRootSchema(false, false);
-    rootSchema.add(schema.getSchemaName(), schema);
+    public static void main(String[] args) throws Exception {
+        String userPath = args[0];
+        String orderPath = args[1];
+        SimpleTable userTable = SimpleTable.newBuilder("users")
+                .addField("id", SqlTypeName.VARCHAR)
+                .addField("name", SqlTypeName.VARCHAR)
+                .addField("age", SqlTypeName.INTEGER)
+                .withFilePath(userPath)
+                .withRowCount(10)
+                .build();
+        SimpleTable orderTable = SimpleTable.newBuilder("orders")
+                .addField("id", SqlTypeName.VARCHAR)
+                .addField("user_id", SqlTypeName.VARCHAR)
+                .addField("goods", SqlTypeName.VARCHAR)
+                .addField("price", SqlTypeName.DECIMAL)
+                .withFilePath(orderPath)
+                .withRowCount(10)
+                .build();
+        SimpleSchema schema = SimpleSchema.newBuilder("s")
+                .addTable(userTable)
+                .addTable(orderTable)
+                .build();
+        CalciteSchema rootSchema = CalciteSchema.createRootSchema(false, false);
+        rootSchema.add(schema.getSchemaName(), schema);
 
-    String sql = "SELECT u.id, name, age, sum(price) " +
-            "FROM users AS u join orders AS o ON u.id = o.user_id " +
-            "WHERE age >= 20 AND age <= 30 " +
-            "GROUP BY u.id, name, age " +
-            "ORDER BY u.id";
-    String sql1 = "SELECT id, age + 1 FROM users";
-    String sql2 = "INSERT INTO users VALUES (1, 'Jark', 21)";
-    String sql3 = "DELETE FROM users WHERE id > 1";
+        String sql = "SELECT u.id, name, age, sum(price) " +
+                "FROM users AS u join orders AS o ON u.id = o.user_id " +
+                "WHERE age >= 20 AND age <= 30 " +
+                "GROUP BY u.id, name, age " +
+                "ORDER BY u.id";
+        String sql1 = "SELECT * FROM users";
+        String sql2 = "INSERT INTO users VALUES (1, 'Jark', 21)";
+        String sql3 = "DELETE FROM users WHERE id > 1";
 
     Optimizer optimizer = Optimizer.create(schema);
     // 1. SQL parse: SQL string --> SqlNode

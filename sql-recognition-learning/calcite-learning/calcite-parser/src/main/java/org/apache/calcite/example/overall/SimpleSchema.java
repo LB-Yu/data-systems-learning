@@ -10,57 +10,57 @@ import java.util.Map;
 
 public class SimpleSchema extends AbstractSchema {
 
-  private final String schemaName;
-  private final Map<String, Table> tableMap;
-
-  private SimpleSchema(String schemaName, Map<String, Table> tableMap) {
-    this.schemaName = schemaName;
-    this.tableMap = tableMap;
-  }
-
-  public String getSchemaName() {
-    return schemaName;
-  }
-
-  @Override
-  public Map<String, Table> getTableMap() {
-    return tableMap;
-  }
-
-  @Override
-  public Schema snapshot(SchemaVersion version) {
-    return this;
-  }
-
-  public static Builder newBuilder(String schemaName) {
-    return new Builder(schemaName);
-  }
-
-  public static final class Builder {
-
     private final String schemaName;
-    private final Map<String, Table> tableMap = new HashMap<>();
+    private final Map<String, Table> tableMap;
 
-    private Builder(String schemaName) {
-      if (schemaName == null || schemaName.isEmpty()) {
-        throw new IllegalArgumentException("Schema name cannot be null or empty");
-      }
-
-      this.schemaName = schemaName;
+    private SimpleSchema(String schemaName, Map<String, Table> tableMap) {
+        this.schemaName = schemaName;
+        this.tableMap = tableMap;
     }
 
-    public Builder addTable(SimpleTable table) {
-      if (tableMap.containsKey(table.getTableName())) {
-        throw new IllegalArgumentException("Table already defined: " + table.getTableName());
-      }
-
-      tableMap.put(table.getTableName(), table);
-
-      return this;
+    public String getSchemaName() {
+        return schemaName;
     }
 
-    public SimpleSchema build() {
-      return new SimpleSchema(schemaName, tableMap);
+    @Override
+    public Map<String, Table> getTableMap() {
+        return tableMap;
     }
-  }
+
+    @Override
+    public Schema snapshot(SchemaVersion version) {
+        return this;
+    }
+
+    public static Builder newBuilder(String schemaName) {
+        return new Builder(schemaName);
+    }
+
+    public static final class Builder {
+
+        private final String schemaName;
+        private final Map<String, Table> tableMap = new HashMap<>();
+
+        private Builder(String schemaName) {
+            if (schemaName == null || schemaName.isEmpty()) {
+                throw new IllegalArgumentException("Schema name cannot be null or empty");
+            }
+
+            this.schemaName = schemaName;
+        }
+
+        public Builder addTable(SimpleTable table) {
+            if (tableMap.containsKey(table.getTableName())) {
+                throw new IllegalArgumentException("Table already defined: " + table.getTableName());
+            }
+
+            tableMap.put(table.getTableName(), table);
+
+            return this;
+        }
+
+        public SimpleSchema build() {
+            return new SimpleSchema(schemaName, tableMap);
+        }
+    }
 }
