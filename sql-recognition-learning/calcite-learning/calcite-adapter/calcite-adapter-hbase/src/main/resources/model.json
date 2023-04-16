@@ -1,0 +1,14 @@
+{
+  "version": "1.0",
+  "defaultSchema": "hbase",
+  "schemas": [
+    {
+      "name": "hbase",
+      "type": "custom",
+      "factory": "org.apache.calcite.adapter.hbase.HBaseSchemaFactory",
+      "operand": {
+        "schema": "/home/liebing/Code/data_systems_learning/sql-recognition-learning/calcite-learning/calcite-adapter/calcite-adapter-hbase/src/main/resources/schema.csv"
+      }
+    }
+  ]
+}

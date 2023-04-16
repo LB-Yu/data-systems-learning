@@ -11,6 +11,7 @@
     <modules>
         <module>calcite-parser</module>
         <module>calcite-avatica</module>
+        <module>calcite-adapter</module>
     </modules>
 
     <properties>
