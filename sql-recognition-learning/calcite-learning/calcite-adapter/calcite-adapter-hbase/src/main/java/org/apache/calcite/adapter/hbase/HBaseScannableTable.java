@@ -5,9 +5,7 @@ import org.apache.calcite.jdbc.JavaTypeFactoryImpl;
 import org.apache.calcite.linq4j.AbstractEnumerable;
 import org.apache.calcite.linq4j.Enumerable;
 import org.apache.calcite.linq4j.Enumerator;
-import org.apache.calcite.rel.type.RelDataTypeSystem;
 import org.apache.calcite.schema.ScannableTable;
-import org.apache.calcite.sql.type.SqlTypeFactoryImpl;
 import org.apache.hadoop.hbase.client.ResultScanner;
 import org.apache.hadoop.hbase.client.Scan;
 import org.apache.hadoop.hbase.client.Table;
@@ -28,7 +26,7 @@ public class HBaseScannableTable extends HBaseTable implements ScannableTable {
                 try {
                     Scan scan = new Scan();
                     ResultScanner scanner = table.getScanner(scan);
-                    return new HBaseEnumerator(
+                    return new HBaseEnumerator<>(
                             scanner,
                             getRowType(new JavaTypeFactoryImpl()));
                 } catch (IOException e) {

@@ -4,6 +4,6 @@ public abstract class HBaseRules {
 
     private HBaseRules() {}
 
-    public static final HBaseTableScanRule HBASE_TABLE_SCAN =
-            HBaseTableScanRule.DEFAULT_CONFIG.toRule(HBaseTableScanRule.class);
+    public static final HBaseProjectTableScanRule PROJECT_SCAN =
+            HBaseProjectTableScanRule.Config.DEFAULT.toRule();
 }

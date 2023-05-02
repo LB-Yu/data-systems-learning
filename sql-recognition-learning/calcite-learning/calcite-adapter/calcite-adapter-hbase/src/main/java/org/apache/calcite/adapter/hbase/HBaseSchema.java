@@ -37,11 +37,11 @@ public class HBaseSchema extends AbstractSchema {
             String[] item;
             while ((item = csvReader.readNext()) != null) {
                 if (item.length == 2) {
-                    String tableName = item[0].toUpperCase();
+                    String tableName = item[0];
                     String fieldsInfo = item[1];
                     org.apache.hadoop.hbase.client.Table table =
                             connection.getTable(TableName.valueOf(tableName));
-                    builder.put(tableName, new HBaseScannableTable(table, fieldsInfo));
+                    builder.put(tableName, new HBaseTranslatableTable(table, fieldsInfo));
                 }
             }
         } catch (IOException e) {

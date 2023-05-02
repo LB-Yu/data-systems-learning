@@ -11,7 +11,7 @@ import org.apache.hadoop.hbase.util.Bytes;
 import java.io.IOException;
 import java.util.List;
 
-public class HBaseEnumerator implements Enumerator<Object[]> {
+public class HBaseEnumerator<T> implements Enumerator<T> {
 
     private final ResultScanner scanner;
     private final RelDataType relDataType;
@@ -24,7 +24,7 @@ public class HBaseEnumerator implements Enumerator<Object[]> {
     }
 
     @Override
-    public Object[] current() {
+    public T current() {
         if (current != null) {
             return convertRow(current);
         }
@@ -51,7 +51,7 @@ public class HBaseEnumerator implements Enumerator<Object[]> {
         scanner.close();
     }
 
-    private Object[] convertRow(Result result) {
+    private T convertRow(Result result) {
         int fieldCount = relDataType.getFieldCount();
         Object[] row = new Object[fieldCount];
 
@@ -72,7 +72,7 @@ public class HBaseEnumerator implements Enumerator<Object[]> {
             }
 
         }
-        return row;
+        return (T) row;
     }
 
     private byte[] getColumn(Result result, String qualifier) {
