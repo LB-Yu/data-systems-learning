@@ -10,7 +10,7 @@ import java.util.Properties;
 public class HBaseExample {
 
     public static void main(String[] args) throws Exception {
-        String sql = "select a, b from test";
+        String sql = "select b from test";
 
         Connection connection = null;
         Statement statement = null;

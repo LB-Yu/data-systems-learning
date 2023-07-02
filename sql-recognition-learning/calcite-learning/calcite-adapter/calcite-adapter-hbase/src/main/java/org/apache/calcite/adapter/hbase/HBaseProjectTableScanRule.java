@@ -5,9 +5,11 @@ import org.apache.calcite.plan.RelRule;
 import org.apache.calcite.rel.logical.LogicalProject;
 import org.apache.calcite.rex.RexInputRef;
 import org.apache.calcite.rex.RexNode;
+import org.immutables.value.Value;
 
 import java.util.List;
 
+@Value.Enclosing
 public class HBaseProjectTableScanRule
         extends RelRule<HBaseProjectTableScanRule.Config> {
 
@@ -44,12 +46,13 @@ public class HBaseProjectTableScanRule
         return columns;
     }
 
+    @Value.Immutable(singleton = false)
     public interface Config extends RelRule.Config {
-        Config DEFAULT = EMPTY
+        Config DEFAULT = ImmutableHBaseProjectTableScanRule.Config.builder()
                 .withOperandSupplier(b0 ->
                         b0.operand(LogicalProject.class).oneInput(b1 ->
                                 b1.operand(HBaseTableScan.class).noInputs()))
-                .as(Config.class);
+                .build();
 
         @Override
         default HBaseProjectTableScanRule toRule() {

@@ -2,7 +2,6 @@ package org.apache.calcite.example.overall;
 
 import org.apache.calcite.DataContext;
 import org.apache.calcite.adapter.file.CsvEnumerator;
-import org.apache.calcite.adapter.file.CsvFieldType;
 import org.apache.calcite.linq4j.AbstractEnumerable;
 import org.apache.calcite.linq4j.Enumerable;
 import org.apache.calcite.linq4j.Enumerator;
@@ -27,7 +26,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicBoolean;
 
-public class SimpleTable extends AbstractTable implements ScannableTable, ProjectableFilterableTable {
+public class SimpleTable
+        extends AbstractTable
+        implements ScannableTable, ProjectableFilterableTable {
 
     private final String tableName;
     private final String filePath;
@@ -37,11 +38,12 @@ public class SimpleTable extends AbstractTable implements ScannableTable, Projec
 
     private RelDataType rowType;
 
-    private SimpleTable(String tableName,
-                        String filePath,
-                        List<String> fieldNames,
-                        List<SqlTypeName> fieldTypes,
-                        SimpleTableStatistic statistic) {
+    private SimpleTable(
+            String tableName,
+            String filePath,
+            List<String> fieldNames,
+            List<SqlTypeName> fieldTypes,
+            SimpleTableStatistic statistic) {
         this.tableName = tableName;
         this.filePath = filePath;
         this.fieldNames = fieldNames;
@@ -81,7 +83,7 @@ public class SimpleTable extends AbstractTable implements ScannableTable, Projec
         Source source = Sources.of(file);
         AtomicBoolean cancelFlag = DataContext.Variable.CANCEL_FLAG.get(root);
 
-        List<CsvFieldType> fieldTypes = getCsvFieldType();
+        List<RelDataType> fieldTypes = getCsvFieldType(root.getTypeFactory());
         List<Integer> fields = ImmutableIntList.identity(fieldTypes.size());
         return new AbstractEnumerable<Object[]>() {
             public Enumerator<Object[]> enumerator() {
@@ -97,7 +99,7 @@ public class SimpleTable extends AbstractTable implements ScannableTable, Projec
         Source source = Sources.of(file);
         AtomicBoolean cancelFlag = DataContext.Variable.CANCEL_FLAG.get(root);
 
-        List<CsvFieldType> fieldTypes = getCsvFieldType();
+        List<RelDataType> fieldTypes = getCsvFieldType(root.getTypeFactory());
         List<Integer> fields = ImmutableIntList.identity(fieldTypes.size());
         return new AbstractEnumerable<Object[]>() {
             public Enumerator<Object[]> enumerator() {
@@ -107,22 +109,10 @@ public class SimpleTable extends AbstractTable implements ScannableTable, Projec
         };
     }
 
-    private List<CsvFieldType> getCsvFieldType() {
-        List<CsvFieldType> csvFieldTypes = new ArrayList<>(fieldTypes.size());
+    private List<RelDataType> getCsvFieldType(RelDataTypeFactory typeFactory) {
+        List<RelDataType> csvFieldTypes = new ArrayList<>(fieldTypes.size());
         for (SqlTypeName sqlTypeName : fieldTypes) {
-            switch (sqlTypeName) {
-                case VARCHAR:
-                    csvFieldTypes.add(CsvFieldType.STRING);
-                    break;
-                case INTEGER:
-                    csvFieldTypes.add(CsvFieldType.INT);
-                    break;
-                case DECIMAL:
-                    csvFieldTypes.add(CsvFieldType.DOUBLE);
-                    break;
-                default:
-                    throw new RuntimeException("Unsupported type " + sqlTypeName + " in csv");
-            }
+            csvFieldTypes.add(typeFactory.createSqlType(sqlTypeName));
         }
         return csvFieldTypes;
     }

@@ -10,23 +10,22 @@ import org.apache.calcite.plan.ConventionTraitDef;
 import org.apache.calcite.plan.RelOptCluster;
 import org.apache.calcite.plan.RelOptUtil;
 import org.apache.calcite.plan.RelTraitSet;
-import org.apache.calcite.plan.volcano.AbstractConverter;
 import org.apache.calcite.plan.volcano.VolcanoPlanner;
 import org.apache.calcite.prepare.CalciteCatalogReader;
 import org.apache.calcite.prepare.Prepare;
 import org.apache.calcite.rel.RelNode;
+import org.apache.calcite.rel.core.JoinRelType;
 import org.apache.calcite.rel.core.RelFactories;
 import org.apache.calcite.rel.rules.CoreRules;
 import org.apache.calcite.rel.type.RelDataTypeFactory;
 import org.apache.calcite.rex.RexBuilder;
 import org.apache.calcite.schema.Schema;
-import org.apache.calcite.sql.fun.SqlStdOperatorTable;
 import org.apache.calcite.tools.RelBuilder;
 import org.apache.calcite.tools.RelBuilderFactory;
 
 import java.util.Collections;
 
-public class VolcanoPlannerExample1 {
+public class JoinExample {
 
     public static void main(String[] args) {
         CalciteSchema rootSchema = CalciteSchema.createRootSchema(false, false);
@@ -48,26 +47,19 @@ public class VolcanoPlannerExample1 {
 
         RelBuilder builder = relBuilderFactory.create(cluster, catalogReader);
 
+        // select name, dept, salary from emps join depts on emps.deptno = depts.deptno;
         RelNode root = builder
+                .scan("depts")
                 .scan("emps")
-                .project(builder.field("empid"), builder.field("deptno"))
-                .aggregate(builder.groupKey("deptno"), builder.count(false, "C"))
+                .join(JoinRelType.INNER, "deptno")
                 .sort(0)
-//                .filter(
-//                        builder.call(
-//                                SqlStdOperatorTable.EQUALS,
-//                                builder.field("deptno"),
-//                                builder.literal(10)))
                 .build();
         System.out.println(RelOptUtil.toString(root));
 
-//        planner.addRule(CoreRules.CALC_MERGE);
-//        planner.addRule(EnumerableRules.ENUMERABLE_FILTER_RULE);
+        planner.addRule(CoreRules.JOIN_COMMUTE);
+        planner.addRule(EnumerableRules.ENUMERABLE_JOIN_RULE);
         planner.addRule(EnumerableRules.ENUMERABLE_TABLE_SCAN_RULE);
-        planner.addRule(EnumerableRules.ENUMERABLE_PROJECT_RULE);
-        planner.addRule(EnumerableRules.ENUMERABLE_AGGREGATE_RULE);
         planner.addRule(EnumerableRules.ENUMERABLE_SORT_RULE);
-        planner.addRule(AbstractConverter.ExpandConversionRule.INSTANCE);
 
         RelTraitSet desiredTraits =
                 root.getCluster().traitSet().replace(EnumerableConvention.INSTANCE);
