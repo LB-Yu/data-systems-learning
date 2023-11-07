@@ -15,7 +15,7 @@
 
     <properties>
         <target.java.version>1.8</target.java.version>
-        <spark.version>3.2.1</spark.version>
+        <spark.version>3.4.0</spark.version>
     </properties>
 
     <dependencies>
