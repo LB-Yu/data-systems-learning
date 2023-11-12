@@ -2,10 +2,11 @@ package org.apache.calcite.avatica.example.simple;
 
 import java.sql.*;
 import java.util.Properties;
+import java.util.TimeZone;
+
 import org.apache.calcite.avatica.*;
-import org.apache.calcite.avatica.remote.*;
 import org.apache.calcite.avatica.remote.Driver;
-import org.apache.calcite.jdbc.*;
+import org.eclipse.jetty.server.Server;
 
 public class CustomAvaticaServer {
 
@@ -20,22 +21,44 @@ public class CustomAvaticaServer {
 //
 //        // Create a factory that returns the appropriate JDBC driver based on the requested URL
 //        AvaticaFactory factory = new AvaticaFactory() {
-//            public ConnectionInfo parseConnectionUrl(String url, Properties info) throws SQLException {
-//                if (url.contains("mysql")) {
-//                    return new ConnectionInfo("jdbc:mysql://localhost:3306/my_database", info);
-//                } else if (url.contains("postgresql")) {
-//                    return new ConnectionInfo("jdbc:postgresql://localhost:5432/my_database", info);
-//                } else {
-//                    throw new SQLException("Unsupported database type: " + url);
-//                }
+//            @Override
+//            public int getJdbcMajorVersion() {
+//                return 0;
 //            }
 //
-//            public DriverVersion createDriverVersion() {
-//                return new DriverVersion("1.0", "Custom Avatica Server");
+//            @Override
+//            public int getJdbcMinorVersion() {
+//                return 0;
 //            }
 //
-//            public Meta createMeta(AvaticaConnection connection) {
-//                return new JdbcMeta(connection);
+//            @Override
+//            public AvaticaConnection newConnection(UnregisteredDriver driver, AvaticaFactory factory, String url, Properties info) throws SQLException {
+//                return null;
+//            }
+//
+//            @Override
+//            public AvaticaStatement newStatement(AvaticaConnection connection, Meta.StatementHandle h, int resultSetType, int resultSetConcurrency, int resultSetHoldability) throws SQLException {
+//                return null;
+//            }
+//
+//            @Override
+//            public AvaticaPreparedStatement newPreparedStatement(AvaticaConnection connection, Meta.StatementHandle h, Meta.Signature signature, int resultSetType, int resultSetConcurrency, int resultSetHoldability) throws SQLException {
+//                return null;
+//            }
+//
+//            @Override
+//            public AvaticaResultSet newResultSet(AvaticaStatement statement, QueryState state, Meta.Signature signature, TimeZone timeZone, Meta.Frame firstFrame) throws SQLException {
+//                return null;
+//            }
+//
+//            @Override
+//            public AvaticaSpecificDatabaseMetaData newDatabaseMetaData(AvaticaConnection connection) {
+//                return null;
+//            }
+//
+//            @Override
+//            public ResultSetMetaData newResultSetMetaData(AvaticaStatement statement, Meta.Signature signature) throws SQLException {
+//                return null;
 //            }
 //        };
 //

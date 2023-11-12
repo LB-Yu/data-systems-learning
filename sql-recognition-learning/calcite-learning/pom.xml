@@ -15,7 +15,7 @@
     </modules>
 
     <properties>
-        <calcite.version>1.29.0</calcite.version>
+        <calcite.version>1.32.0</calcite.version>
         <guava.version>30.1.1-jre</guava.version>
         <flink.version>1.17.0</flink.version>
     </properties>

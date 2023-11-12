@@ -6,7 +6,7 @@ import org.apache.calcite.avatica.remote.LocalService;
 import org.apache.calcite.avatica.remote.Service;
 import org.apache.calcite.avatica.server.HttpServer;
 
-public class Server {
+public class ServerExample {
 
     public static void main(String[] args) throws Exception {
         String url = "jdbc:mysql://localhost:3306/test";
