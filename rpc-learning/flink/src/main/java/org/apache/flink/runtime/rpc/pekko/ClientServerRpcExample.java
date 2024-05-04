@@ -2,10 +2,8 @@ package org.apache.flink.runtime.rpc.pekko;
 
 import org.apache.flink.configuration.Configuration;
 import org.apache.flink.runtime.rpc.RpcService;
-import org.apache.flink.runtime.rpc.pekko.PekkoRpcServiceUtils;
 
 import java.util.Optional;
-import java.util.concurrent.ExecutionException;
 
 public class ClientServerRpcExample {
 
