@@ -72,17 +72,18 @@ Node primary():
     Node n;
 }
 {
-    t=<NUMBER>
-    {
-        double number = Double.parseDouble(t.image);
-        return new ValueNode(number);
-    }
-|   LOOKAHEAD(<NUMBER> "!")
+    LOOKAHEAD(<NUMBER> "!")
     t=<NUMBER> "!"
     {
         String value = t.image;
         double number = Double.parseDouble(value);
         return new FactorialNode(new ValueNode(number));
+    }
+|
+    t=<NUMBER>
+    {
+        double number = Double.parseDouble(t.image);
+        return new ValueNode(number);
     }
 |   LOOKAHEAD("(" n=expr() ")" "!")
     "(" n=expr() ")" "!"
