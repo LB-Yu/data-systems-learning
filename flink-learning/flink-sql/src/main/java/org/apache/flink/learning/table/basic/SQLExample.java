@@ -5,8 +5,8 @@ import org.apache.flink.table.api.bridge.java.StreamTableEnvironment;
 
 public class SQLExample {
 
-  public static void main(String[] args) {
-    StreamExecutionEnvironment env = StreamExecutionEnvironment.getExecutionEnvironment();
-    StreamTableEnvironment tableEnv = StreamTableEnvironment.create(env);
-  }
+    public static void main(String[] args) {
+        StreamExecutionEnvironment env = StreamExecutionEnvironment.getExecutionEnvironment();
+        StreamTableEnvironment tableEnv = StreamTableEnvironment.create(env);
+    }
 }

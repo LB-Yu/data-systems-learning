@@ -5,5 +5,5 @@ import org.apache.flink.types.Row;
 
 public abstract class RowLookupFunction extends ProcessFunction<Row, Row> {
 
-  protected boolean isOuterJoin;
+    protected boolean isOuterJoin;
 }

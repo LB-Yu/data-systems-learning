@@ -10,17 +10,17 @@ import java.sql.SQLException;
 
 public class JdbcRowConverter implements Serializable {
 
-  public Row toInternal(ResultSet resultSet) throws SQLException {
-    ResultSetMetaData resultSetMetaData = resultSet.getMetaData();
-    int arity = resultSetMetaData.getColumnCount();
-    Row row = new Row(arity);
-    for (int i = 0; i < arity; ++i) {
-      row.setField(i, resultSet.getObject(i + 1));
+    public Row toInternal(ResultSet resultSet) throws SQLException {
+        ResultSetMetaData resultSetMetaData = resultSet.getMetaData();
+        int arity = resultSetMetaData.getColumnCount();
+        Row row = new Row(arity);
+        for (int i = 0; i < arity; ++i) {
+            row.setField(i, resultSet.getObject(i + 1));
+        }
+        return row;
     }
-    return row;
-  }
 
-  PreparedStatement toExternal(Row row, PreparedStatement preparedStatement) {
-    return null;
-  }
+    PreparedStatement toExternal(Row row, PreparedStatement preparedStatement) {
+        return null;
+    }
 }

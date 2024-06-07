@@ -10,24 +10,24 @@ import java.util.Arrays;
 
 public class SinkModeTest {
 
-  public static void main(String[] args) throws Exception {
-    StreamExecutionEnvironment env = StreamExecutionEnvironment.getExecutionEnvironment();
-    env.setParallelism(1);
-    StreamTableEnvironment tEnv = StreamTableEnvironment.create(env);
+    public static void main(String[] args) throws Exception {
+        StreamExecutionEnvironment env = StreamExecutionEnvironment.getExecutionEnvironment();
+        env.setParallelism(1);
+        StreamTableEnvironment tEnv = StreamTableEnvironment.create(env);
 
-    DataStream<Order> dataStream =
-            env.fromCollection(
-                    Arrays.asList(
-                            new Order("1", "Bob", "Shoes", System.currentTimeMillis()),
-                            new Order("2", "Bob", "Shoes", System.currentTimeMillis()),
-                            new Order("3", "Julia", "Hat", System.currentTimeMillis())));
+        DataStream<Order> dataStream =
+                env.fromCollection(
+                        Arrays.asList(
+                                new Order("1", "Bob", "Shoes", System.currentTimeMillis()),
+                                new Order("2", "Bob", "Shoes", System.currentTimeMillis()),
+                                new Order("3", "Julia", "Hat", System.currentTimeMillis())));
 
-    Table table = tEnv.fromDataStream(dataStream);
+        Table table = tEnv.fromDataStream(dataStream);
 
-    Table result = tEnv.sqlQuery("SELECT count(*) from " + table);
+        Table result = tEnv.sqlQuery("SELECT count(*) from " + table);
 
-    tEnv.toChangelogStream(result).print();
+        tEnv.toChangelogStream(result).print();
 
-    env.execute();
-  }
+        env.execute();
+    }
 }

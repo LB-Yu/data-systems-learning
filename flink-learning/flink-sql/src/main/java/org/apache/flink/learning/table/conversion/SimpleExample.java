@@ -13,33 +13,36 @@ import org.apache.flink.util.Collector;
 
 /**
  * A simple example shows how to convert between Table & DataStream
- * */
+ */
 public class SimpleExample {
 
-  public static void main(String[] args) throws Exception {
-    StreamExecutionEnvironment env = StreamExecutionEnvironment.getExecutionEnvironment();
-    StreamTableEnvironment tableEnv = StreamTableEnvironment.create(env);
+    public static void main(String[] args) throws Exception {
+        StreamExecutionEnvironment env = StreamExecutionEnvironment.getExecutionEnvironment();
+        StreamTableEnvironment tableEnv = StreamTableEnvironment.create(env);
 
-    DataStream<Row> dataStream = env.fromElements(
-            Row.of("Alice", 12),
-            Row.of("Bob", 10),
-            Row.of("Alice", 100));
+        DataStream<Row> dataStream = env.fromElements(
+                Row.of("Alice", 12),
+                Row.of("Bob", 10),
+                Row.of("Alice", 100));
 
-    RowTypeInfo rowTypeInfo = new RowTypeInfo(
-            new TypeInformation<?>[] {Types.STRING, Types.INT},
-            new String[] {"name", "score"});
-    DataStream<Row> processedStream = dataStream.process(new ProcessFunction<Row, Row>() {
-      @Override
-      public void processElement(Row row,
-                                 Context context,
-                                 Collector<Row> collector) {
-        collector.collect(row);
-      }
-    }).returns(rowTypeInfo);
+        RowTypeInfo rowTypeInfo = new RowTypeInfo(
+                new TypeInformation<?>[]{Types.STRING, Types.INT},
+                new String[]{"name", "score"});
+        DataStream<Row> processedStream =
+                dataStream
+                        .process(
+                                new ProcessFunction<Row, Row>() {
+                                    @Override
+                                    public void processElement(
+                                            Row row, Context context, Collector<Row> collector) {
+                                        collector.collect(row);
+                                    }
+                                })
+                        .returns(rowTypeInfo);
 
-    Table inputTable = tableEnv.fromChangelogStream(processedStream);
-    inputTable.printSchema();
+        Table inputTable = tableEnv.fromChangelogStream(processedStream);
+        inputTable.printSchema();
 
-    env.execute();
-  }
+        inputTable.execute().print();
+    }
 }

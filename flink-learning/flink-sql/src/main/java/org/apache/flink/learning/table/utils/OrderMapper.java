@@ -12,26 +12,26 @@ import java.time.format.DateTimeFormatter;
 
 public class OrderMapper extends RichFlatMapFunction<String, Order> {
 
-  private static Logger LOGGER = LoggerFactory.getLogger(OrderMapper.class);
+    private static Logger LOGGER = LoggerFactory.getLogger(OrderMapper.class);
 
-  private DateTimeFormatter formatter;
+    private DateTimeFormatter formatter;
 
-  @Override
-  public void open(Configuration parameters) throws Exception {
-    this.formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-  }
-
-  @Override
-  public void flatMap(String line, Collector<Order> collector) throws Exception {
-    try {
-      String[] items = line.split(",");
-      String orderId = items[0];
-      String userName = items[1];
-      String item = items[2];
-      long timestamp = LocalDateTime.parse(items[3], formatter).toInstant(ZoneOffset.of("+8")).toEpochMilli();
-      collector.collect(new Order(orderId, userName, item, timestamp));
-    } catch (Exception e) {
-      LOGGER.error("Cannot parse line: {}", line);
+    @Override
+    public void open(Configuration parameters) throws Exception {
+        this.formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
     }
-  }
+
+    @Override
+    public void flatMap(String line, Collector<Order> collector) throws Exception {
+        try {
+            String[] items = line.split(",");
+            String orderId = items[0];
+            String userName = items[1];
+            String item = items[2];
+            long timestamp = LocalDateTime.parse(items[3], formatter).toInstant(ZoneOffset.of("+8")).toEpochMilli();
+            collector.collect(new Order(orderId, userName, item, timestamp));
+        } catch (Exception e) {
+            LOGGER.error("Cannot parse line: {}", line);
+        }
+    }
 }
