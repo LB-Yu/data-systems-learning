@@ -16,6 +16,10 @@
             <groupId>org.apache.flink.learning</groupId>
             <artifactId>flink-common</artifactId>
         </dependency>
+        <dependency>
+            <groupId>org.apache.flink.learning</groupId>
+            <artifactId>flink-udx</artifactId>
+        </dependency>
 
         <!-- Flink dependencies -->
         <dependency>
